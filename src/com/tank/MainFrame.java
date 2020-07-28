@@ -1,6 +1,6 @@
 package com.tank;
 
-public class T {
+public class MainFrame {
 	
 	public static void main(String[] args) throws InterruptedException {
 		TankFrame tf = new TankFrame();
