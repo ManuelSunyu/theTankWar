@@ -8,14 +8,16 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TankFrame extends Frame{
 
 	private static final long serialVersionUID = 3140489942216917991L;
 	
-	Tank myTank = new Tank(200,200,Dir.DOWN);
-	Bullet b = new Bullet(200,50,Dir.DOWN);
-	
+	Tank myTank = new Tank(200,200,Dir.DOWN,this);
+	Bullet b = new Bullet(200,50,Dir.DOWN,this);
+	List<Bullet> listBullet = new ArrayList<>();
 	static final int GMAE_WIDTH=600,GAME_HIGHT=800;
 	
 	public TankFrame() {
@@ -49,8 +51,16 @@ public class TankFrame extends Frame{
 	
 	@Override
 	public void paint(Graphics g) {
+		
+		Color c = g.getColor();
+		g.setColor(Color.WHITE);
+		g.drawString("子弹的数量："+listBullet.size(), 10, 60);
+		g.setColor(c);
+		
 		myTank.paint(g);
-		b.paint(g);
+		for(int i=0;i<listBullet.size();i++) {
+			listBullet.get(i).paint(g);
+		}
 	}
 	
 	
@@ -99,6 +109,9 @@ public class TankFrame extends Frame{
 			 case KeyEvent.VK_S:
 				bD = false;
 				 break;
+			 case KeyEvent.VK_K:
+				 myTank.fire();
+			  	 break;
 			 default:
 				 break;
 			 }
