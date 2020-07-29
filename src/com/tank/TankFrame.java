@@ -12,9 +12,9 @@ public class TankFrame extends Frame{
 	private static final long serialVersionUID = 3140489942216917991L;
 	
 	Tank myTank = new Tank(200,200,Dir.DOWN);
-	
+	Bullet b = new Bullet(200,50,Dir.DOWN);
 	public TankFrame() {
-		this.setSize(1000,800);
+		this.setSize(500,800);
 		this.setResizable(false);
 		this.setTitle("TheTankWat");
 		this.setVisible(true);
@@ -31,6 +31,7 @@ public class TankFrame extends Frame{
 	@Override
 	public void paint(Graphics g) {
 		myTank.paint(g);
+		b.paint(g);
 	}
 	
 	class MyKeyListener extends KeyAdapter{

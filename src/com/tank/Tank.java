@@ -7,8 +7,8 @@ public class Tank {
 	private int x;
 	private int y;
 	private Dir dir = Dir.DOWN;
-	private static final int speed=10;
-	private boolean move = false;
+	private static final int speed=6;
+	private boolean move = true;
 	
 	public Tank(int x,int y,Dir dir) {
 		super();
@@ -23,7 +23,7 @@ public class Tank {
 	 }
 
 	private void move(Dir dir) {
-			if(move) {
+			if(!move) {
 				return;
 			}
 			switch(dir) {
