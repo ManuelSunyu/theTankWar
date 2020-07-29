@@ -1,7 +1,9 @@
 package com.tank;
 
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -13,8 +15,11 @@ public class TankFrame extends Frame{
 	
 	Tank myTank = new Tank(200,200,Dir.DOWN);
 	Bullet b = new Bullet(200,50,Dir.DOWN);
+	
+	static final int GMAE_WIDTH=600,GAME_HIGHT=800;
+	
 	public TankFrame() {
-		this.setSize(500,800);
+		this.setSize(GMAE_WIDTH,GAME_HIGHT);
 		this.setResizable(false);
 		this.setTitle("TheTankWat");
 		this.setVisible(true);
@@ -24,8 +29,22 @@ public class TankFrame extends Frame{
 			public void  windowClosing(WindowEvent e) {				
 				System.exit(0);
 			}
-		});
-		
+		});		
+	}
+	
+	Image offScreenImage = null;
+	@Override
+	public void update(Graphics g) {//Ω‚æˆ…¡À∏Ã‚
+		if(offScreenImage==null) {
+			offScreenImage=this.createImage(GMAE_WIDTH,GAME_HIGHT);
+		}
+		Graphics gOffScreen = offScreenImage.getGraphics();
+		Color c = gOffScreen.getColor();
+		gOffScreen.setColor(Color.BLACK);
+		gOffScreen.fillRect(0,0, GMAE_WIDTH, GAME_HIGHT);
+		gOffScreen.setColor(c);
+		paint(gOffScreen);
+		g.drawImage(offScreenImage, 0 , 0 ,null);		
 	}
 	
 	@Override
@@ -33,6 +52,7 @@ public class TankFrame extends Frame{
 		myTank.paint(g);
 		b.paint(g);
 	}
+	
 	
 	class MyKeyListener extends KeyAdapter{
 		
