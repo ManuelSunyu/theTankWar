@@ -1,6 +1,5 @@
 package com.tank;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 public class Tank {
@@ -23,10 +22,23 @@ public class Tank {
 	}
 	
 	 public void paint(Graphics g) {
-		 Color c =g.getColor();
-		 g.setColor(Color.YELLOW);
-		 g.fillRect(x, y, w, h);
-		 g.setColor(c);
+		 
+		 switch(dir) {
+			case LEFT:
+				g.drawImage(ResourceManager.tankL, x, y, null);
+				break;
+			case RIGHT:
+				g.drawImage(ResourceManager.tankR, x, y, null);
+				break;
+			case UP:
+				g.drawImage(ResourceManager.tankU, x, y, null);
+				break;
+			case DOWN:
+				g.drawImage(ResourceManager.tankD, x, y, null);
+				break;
+			default:break;
+		}
+		
 		 move(dir);
 	 }
 
