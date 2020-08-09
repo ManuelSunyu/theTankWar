@@ -15,15 +15,16 @@ public class TankFrame extends Frame{
 
 	private static final long serialVersionUID = 3140489942216917991L;
 	
-	Tank myTank = new Tank(200,200,Dir.DOWN,this);
+	Tank myTank = new Tank(300,700,Dir.UP,this);
 	Bullet b = new Bullet(200,50,Dir.DOWN,this);
 	List<Bullet> listBullet = new ArrayList<>();
+	List<Tank> enemyList = new ArrayList<>();
 	static final int GMAE_WIDTH=600,GAME_HIGHT=800;
 	
 	public TankFrame() {
 		this.setSize(GMAE_WIDTH,GAME_HIGHT);
 		this.setResizable(false);
-		this.setTitle("TheTankWat");
+		this.setTitle("TheTankWar");
 		this.setVisible(true);
 		this.addKeyListener(new MyKeyListener());
 		addWindowListener(new WindowAdapter() {
@@ -60,6 +61,14 @@ public class TankFrame extends Frame{
 		myTank.paint(g);
 		for(int i=0;i<listBullet.size();i++) {
 			listBullet.get(i).paint(g);
+		}
+		for(int i=0;i<enemyList.size();i++) {
+			enemyList.get(i).paint(g);
+		}
+		for(int i=0 ; i<listBullet.size();i++) {
+			for(int j=0;j<enemyList.size();j++) {
+				listBullet.get(i).collideWidth(enemyList.get(j));
+			}
 		}
 	}
 	
