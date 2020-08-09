@@ -15,8 +15,8 @@ public class TankFrame extends Frame{
 
 	private static final long serialVersionUID = 3140489942216917991L;
 	
-	Tank myTank = new Tank(300,700,Dir.UP,this);
-	Bullet b = new Bullet(200,50,Dir.DOWN,this);
+	Tank myTank = new Tank(300,700,Dir.UP,Group.GOOD,this);
+	Bullet b = new Bullet(200,50,Dir.DOWN,Group.GOOD,this);
 	List<Bullet> listBullet = new ArrayList<>();
 	List<Tank> enemyList = new ArrayList<>();
 	static final int GMAE_WIDTH=600,GAME_HIGHT=800;

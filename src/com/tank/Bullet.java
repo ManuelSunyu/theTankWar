@@ -13,13 +13,14 @@ public class Bullet {
 	private Dir dir;
 	private  boolean living=true;
 	TankFrame tf = null;
-	
-	public Bullet(int x,int y,Dir dir,TankFrame tf) {
+	private Group group = Group.BAD;
+	public Bullet(int x,int y,Dir dir,Group group,TankFrame tf) {
 		super();
 		this.x=x;
 		this.y=y;
 		this.dir=dir;
 		this.tf=tf;
+		this.group=group;
 	}
 	
 	public void paint(Graphics g) {
@@ -68,7 +69,9 @@ public class Bullet {
 	}
 
 	public void collideWidth(Tank tank) {
-		
+		if(this.group==tank.getGroup()) {
+			return;
+		}
 		Rectangle rectB = new Rectangle(this.x,this.y,width,hight);
 		Rectangle rectT = new Rectangle(tank.getX(),tank.getY(),Tank.w,Tank.h);
 		if(rectB.intersects(rectT)) {
