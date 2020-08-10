@@ -82,9 +82,7 @@ public class Tank {
 			if(random.nextInt(50)>40) this.fire();
 			randomDir();
 		}
-		if(this.group==Group.GOOD) {
-			if(random.nextInt(100)>95) this.fire();
-		}
+		
 		
 		boundsCheck();
 		rect.x=this.x;
