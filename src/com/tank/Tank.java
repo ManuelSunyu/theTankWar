@@ -1,6 +1,8 @@
 package com.tank;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Tank {
@@ -8,14 +10,17 @@ public class Tank {
 	private int x;
 	private int y;
 	private Dir dir = Dir.UP;
-	private static final int speed=6;
+	private static final int speed=3;
 	private boolean move = true;
-	public static int w=ResourceManager.tankD.getWidth();
-	public static int h = ResourceManager.tankD.getHeight();
+	public static int w=ResourceManager.tankGD.getWidth();
+	public static int h = ResourceManager.tankGD.getHeight();
 	private TankFrame tf=null;
 	private boolean living=true;
 	private Random random = new Random();
 	private Group group = Group.BAD;
+	
+	Rectangle rect = new Rectangle();
+	
 	public Tank(int x,int y,Dir dir,Group group ,TankFrame tf) {
 		super();
 		this.x=x;
@@ -23,6 +28,10 @@ public class Tank {
 		this.dir=dir;
 		this.tf=tf;
 		this.group=group;
+		rect.x=this.x;
+		rect.y=this.y;
+		rect.height=h;
+		rect.width=w;
 	}
 	
 	 public void paint(Graphics g) {
@@ -31,24 +40,26 @@ public class Tank {
 		 }
 		 switch(dir) {
 			case LEFT:
-				g.drawImage(ResourceManager.tankL, x, y, null);
+				g.drawImage(this.group==Group.GOOD?ResourceManager.tankGL:ResourceManager.tankBL, x, y, null);
 				break;
 			case RIGHT:
-				g.drawImage(ResourceManager.tankR, x, y, null);
+				g.drawImage(this.group==Group.GOOD?ResourceManager.tankGR:ResourceManager.tankBR, x, y, null);
 				break;
 			case UP:
-				g.drawImage(ResourceManager.tankU, x, y, null);
+				g.drawImage(this.group==Group.GOOD?ResourceManager.tankGU:ResourceManager.tankBU, x, y, null);
 				break;
 			case DOWN:
-				g.drawImage(ResourceManager.tankD, x, y, null);
+				g.drawImage(this.group==Group.GOOD?ResourceManager.tankGD:ResourceManager.tankBD, x, y, null);
 				break;
 			default:break;
 		}
 		
-		 move(dir);
+		 move();
 	 }
-
-	private void move(Dir dir) {
+	 
+	
+	 
+	private void move() {
 			if(!move) {
 				return;
 			}
@@ -68,12 +79,41 @@ public class Tank {
 			default:break;
 		}
 		if(this.group==Group.BAD) {
-			if(random.nextInt(10)>8) this.fire();
+			if(random.nextInt(50)>40) this.fire();
+			randomDir();
+		}
+		if(this.group==Group.GOOD) {
+			if(random.nextInt(100)>95) this.fire();
 		}
 		
+		boundsCheck();
+		rect.x=this.x;
+		rect.y=this.y;
 	}
 	
-	 public void fire() {
+	 private void boundsCheck() {
+		if(this.group==Group.GOOD) {
+			if(x<0) x=Tank.h/20;
+			if(y<Tank.w/2) y=Tank.w/2;
+			if(x>TankFrame.GMAE_WIDTH-Tank.w)  x = TankFrame.GMAE_WIDTH-Tank.w;
+			if(y>TankFrame.GAME_HIGHT-Tank.h) y = TankFrame.GAME_HIGHT-Tank.h;
+		}
+		if(this.group==Group.BAD) {
+			if(x<0) dir=Dir.RIGHT;
+			if(y<Tank.w/2)  dir=Dir.DOWN;
+			if(x>TankFrame.GMAE_WIDTH-Tank.w) dir=Dir.LEFT;
+			if(y>TankFrame.GAME_HIGHT-Tank.h) dir=Dir.UP;
+		}
+	}
+
+	private void randomDir() {
+		 int rand = random.nextInt(100);
+		 if(rand<4) {
+			 this.dir = Dir.values()[rand];
+		 }
+	}
+
+	public void fire() {
 		 int bx = this.x+Tank.w/2-Bullet.width/2;
 		 int by = this.y+Tank.h/2-Bullet.hight/2;
 		 tf.listBullet.add(new Bullet(bx,by,dir,this.group,tf));

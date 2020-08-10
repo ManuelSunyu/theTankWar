@@ -19,8 +19,10 @@ public class TankFrame extends Frame{
 	Bullet b = new Bullet(200,50,Dir.DOWN,Group.GOOD,this);
 	List<Bullet> listBullet = new ArrayList<>();
 	List<Tank> enemyList = new ArrayList<>();
-	static final int GMAE_WIDTH=600,GAME_HIGHT=800;
 	
+	List<Explode> explodes = new ArrayList<>();
+
+	static final int GMAE_WIDTH=600,GAME_HIGHT=900;
 	public TankFrame() {
 		this.setSize(GMAE_WIDTH,GAME_HIGHT);
 		this.setResizable(false);
@@ -65,6 +67,12 @@ public class TankFrame extends Frame{
 		for(int i=0;i<enemyList.size();i++) {
 			enemyList.get(i).paint(g);
 		}
+		//±¬Õ¨
+		
+		for(int i=0;i<explodes.size();i++) {
+			explodes.get(i).paint(g);
+		}
+		
 		for(int i=0 ; i<listBullet.size();i++) {
 			for(int j=0;j<enemyList.size();j++) {
 				listBullet.get(i).collideWidth(enemyList.get(j));

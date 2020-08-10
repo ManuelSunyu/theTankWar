@@ -14,6 +14,9 @@ public class Bullet {
 	private  boolean living=true;
 	TankFrame tf = null;
 	private Group group = Group.BAD;
+	
+	Rectangle rect = new Rectangle();
+	
 	public Bullet(int x,int y,Dir dir,Group group,TankFrame tf) {
 		super();
 		this.x=x;
@@ -21,6 +24,11 @@ public class Bullet {
 		this.dir=dir;
 		this.tf=tf;
 		this.group=group;
+		
+		rect.x=this.x;
+		rect.y=this.y;
+		rect.height=hight;
+		rect.width=width;
 	}
 	
 	public void paint(Graphics g) {
@@ -63,20 +71,22 @@ public class Bullet {
 				break;
 			default:break;
 		}
+		rect.x=this.x;
+		rect.y=this.y;
 		if(x<0|| y<0||y>TankFrame.GAME_HIGHT||x>TankFrame.GMAE_WIDTH) {
 			living=false;
 		}
+		
 	}
 
 	public void collideWidth(Tank tank) {
 		if(this.group==tank.getGroup()) {
 			return;
 		}
-		Rectangle rectB = new Rectangle(this.x,this.y,width,hight);
-		Rectangle rectT = new Rectangle(tank.getX(),tank.getY(),Tank.w,Tank.h);
-		if(rectB.intersects(rectT)) {
+		if(this.rect.intersects(tank.rect)) {
 			tank.die();
 			this.die();
+			tf.explodes.add(new Explode(this.x,this.y,tf));
 		}
 	}
 
