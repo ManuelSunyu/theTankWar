@@ -28,7 +28,8 @@ public class Bullet {
 		rect.x=this.x;
 		rect.y=this.y;
 		rect.height=hight;
-		rect.width=width;
+		rect.width=width;		
+		tf.listBullet.add(this);
 	}
 	
 	public void paint(Graphics g) {
@@ -36,20 +37,20 @@ public class Bullet {
 			tf.listBullet.remove(this);
 		}
 		switch(dir) {
-		case LEFT:
-			g.drawImage(ResourceManager.bulletL, x, y, null);
-			break;
-		case RIGHT:
-			g.drawImage(ResourceManager.bulletR, x, y, null);
-			break;
-		case UP:
-			g.drawImage(ResourceManager.bulletU, x, y, null);
-			break;
-		case DOWN:
-			g.drawImage(ResourceManager.bulletD, x, y, null);
-			break;
-		default:break;
-	}
+			case LEFT:
+				g.drawImage(ResourceManager.bulletL, x, y, null);
+				break;
+			case RIGHT:
+				g.drawImage(ResourceManager.bulletR, x, y, null);
+				break;
+			case UP:
+				g.drawImage(ResourceManager.bulletU, x, y, null);
+				break;
+			case DOWN:
+				g.drawImage(ResourceManager.bulletD, x, y, null);
+				break;
+			default:break;
+		}
 		
 		move();
 		

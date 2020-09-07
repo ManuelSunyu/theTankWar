@@ -7,19 +7,20 @@ import java.util.Random;
 
 public class Tank {
 	
-	private int x;
-	private int y;
-	private Dir dir = Dir.UP;
+	 int x;
+	 int y;
+	 Dir dir = Dir.UP;
 	private static final int speed=3;
 	private boolean move = true;
 	public static int w=ResourceManager.tankGD.getWidth();
 	public static int h = ResourceManager.tankGD.getHeight();
-	private TankFrame tf=null;
+	TankFrame tf=null;
 	private boolean living=true;
 	private Random random = new Random();
-	private Group group = Group.BAD;
+	 Group group = Group.BAD;
 	
 	Rectangle rect = new Rectangle();
+	FireStrategy fs = new DefaultFireStrategy();
 	
 	public Tank(int x,int y,Dir dir,Group group ,TankFrame tf) {
 		super();
@@ -32,6 +33,7 @@ public class Tank {
 		rect.y=this.y;
 		rect.height=h;
 		rect.width=w;
+		
 	}
 	
 	 public void paint(Graphics g) {
@@ -112,9 +114,14 @@ public class Tank {
 	}
 
 	public void fire() {
-		 int bx = this.x+Tank.w/2-Bullet.width/2;
-		 int by = this.y+Tank.h/2-Bullet.hight/2;
-		 tf.listBullet.add(new Bullet(bx,by,dir,this.group,tf));
+		fs.fire(this);
+		/*if(this.group==Group.GOOD) {
+			fs= new FourDirFireStrategy();
+			fs.fire(this);
+		}
+		if(this.group==Group.BAD) {
+			fs.fire(this);
+		}*/
 	 }
 	public Dir getDir() {
 		return dir;
@@ -159,6 +166,14 @@ public class Tank {
 
 	public void setGroup(Group group) {
 		this.group = group;
+	}
+
+	public TankFrame getTf() {
+		return tf;
+	}
+
+	public void setTf(TankFrame tf) {
+		this.tf = tf;
 	}
 	 
 }
