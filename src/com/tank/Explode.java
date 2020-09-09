@@ -2,12 +2,14 @@ package com.tank;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+
+import com.tank.abstractFactory.BaseExplode;
 /**
  * ±¬Õ¨
  * @author sy
  *
  */
-public class Explode {
+public class Explode extends BaseExplode{
 	public static int  width=ResourceManager.explodes[0].getWidth();
 	public static int  hight=ResourceManager.explodes[0].getHeight();
 
@@ -23,6 +25,7 @@ public class Explode {
 		this.tf=tf;
 	}
 	
+	@Override
 	public void paint(Graphics g) {
 		g.drawImage(ResourceManager.explodes[step++], x, y, null);
 		if(step>=ResourceManager.explodes.length) {

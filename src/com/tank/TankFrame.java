@@ -10,21 +10,29 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
+import com.tank.abstractFactory.BaseBullet;
+import com.tank.abstractFactory.BaseExplode;
+import com.tank.abstractFactory.BaseTank;
+import com.tank.abstractFactory.DefaultFactory;
+import com.tank.abstractFactory.GameFactory;
+import com.tank.abstractFactory.RectFactory;
 
 public class TankFrame extends Frame{
 
 	private static final long serialVersionUID = 3140489942216917991L;
 	
-	List<Bullet> listBullet = new ArrayList<>();
-	List<Tank> enemyList = new ArrayList<>();
-	List<Explode> explodes = new ArrayList<>();
+	public List<BaseBullet> listBullet = new ArrayList<>();
+	public List<BaseTank> enemyList = new ArrayList<>();
+	public List<BaseExplode> explodes = new ArrayList<>();
 	
-	Tank myTank = new Tank(300,700,Dir.UP,Group.GOOD,this);
-	Bullet b = new Bullet(200,50,Dir.DOWN,Group.GOOD,this);	
+	public GameFactory gf = new RectFactory();
+	
+	public BaseTank myTank =gf.createTank(300,700,Dir.UP,Group.GOOD,this); //new Tank(300,700,Dir.UP,Group.GOOD,this);
+	public Bullet b = new Bullet(200,50,Dir.DOWN,Group.GOOD,this);	
 
 
-	static final int GMAE_WIDTH=600,GAME_HIGHT=900;
+	public static final int GMAE_WIDTH=600,GAME_HIGHT=900;
 	public TankFrame() {
 		this.setSize(GMAE_WIDTH,GAME_HIGHT);
 		this.setResizable(false);
@@ -138,14 +146,14 @@ public class TankFrame extends Frame{
 		}
 		
 		private void setMainTankDir() {
-			myTank.setMove(true);
-			if(bL)  myTank.setDir( Dir.LEFT);
-			if(bR)  myTank.setDir( Dir.RIGHT);
-			if(bU)  myTank.setDir( Dir.UP);
-			if(bD)  myTank.setDir( Dir.DOWN);
+			myTank.move=true;
+			if(bL)  myTank.dir= Dir.LEFT;
+			if(bR)  myTank.dir= Dir.RIGHT;
+			if(bU)  myTank.dir= Dir.UP;
+			if(bD)  myTank.dir= Dir.DOWN;
 			
 			if(!bL && !bR && !bU && !bD) {
-				myTank.setMove(false);
+				myTank.move=false;
 			}
 		}
 	}

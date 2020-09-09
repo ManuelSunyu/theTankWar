@@ -1,25 +1,31 @@
-package com.tank;
+package com.tank.abstractFactory;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import com.tank.DefaultFireStrategy;
+import com.tank.Dir;
+import com.tank.FireStrategy;
+import com.tank.Group;
+import com.tank.ResourceManager;
+import com.tank.TankFrame;
 import com.tank.abstractFactory.BaseTank;
 
-public class Tank extends BaseTank{
-
-
+public class RectTank extends BaseTank{
+	
+	 
 	private static final int speed=3;
-	private boolean move = true;
-	public static int w=ResourceManager.tankGD.getWidth();
-	public static int h = ResourceManager.tankGD.getHeight();
+	public static int w=ResourceManager.tankD.getWidth();
+	public static int h = ResourceManager.tankD.getHeight();
+	
 	private boolean living=true;
 	private Random random = new Random();
 	
 	FireStrategy fs = new DefaultFireStrategy();
 	
-	public Tank(int x,int y,Dir dir,Group group ,TankFrame tf) {
+	public RectTank(int x,int y,Dir dir,Group group ,TankFrame tf) {
 		super();
 		this.x=x;
 		this.y=y;
@@ -40,16 +46,16 @@ public class Tank extends BaseTank{
 		 }
 		 switch(dir) {
 			case LEFT:
-				g.drawImage(this.group==Group.GOOD?ResourceManager.tankGL:ResourceManager.tankBL, x, y, null);
+				g.drawImage(this.group==Group.GOOD?ResourceManager.tankL:ResourceManager.tankL, x, y, null);
 				break;
 			case RIGHT:
-				g.drawImage(this.group==Group.GOOD?ResourceManager.tankGR:ResourceManager.tankBR, x, y, null);
+				g.drawImage(this.group==Group.GOOD?ResourceManager.tankR:ResourceManager.tankR, x, y, null);
 				break;
 			case UP:
-				g.drawImage(this.group==Group.GOOD?ResourceManager.tankGU:ResourceManager.tankBU, x, y, null);
+				g.drawImage(this.group==Group.GOOD?ResourceManager.tankU:ResourceManager.tankU, x, y, null);
 				break;
 			case DOWN:
-				g.drawImage(this.group==Group.GOOD?ResourceManager.tankGD:ResourceManager.tankBD, x, y, null);
+				g.drawImage(this.group==Group.GOOD?ResourceManager.tankD:ResourceManager.tankD, x, y, null);
 				break;
 			default:break;
 		}
@@ -58,7 +64,6 @@ public class Tank extends BaseTank{
 	 }
 	 
 	
-	 
 	private void move() {
 			if(!move) {
 				return;
@@ -91,16 +96,16 @@ public class Tank extends BaseTank{
 	
 	 private void boundsCheck() {
 		if(this.group==Group.GOOD) {
-			if(x<0) x=Tank.h/20;
-			if(y<Tank.w/2) y=Tank.w/2;
-			if(x>TankFrame.GMAE_WIDTH-Tank.w)  x = TankFrame.GMAE_WIDTH-Tank.w;
-			if(y>TankFrame.GAME_HIGHT-Tank.h) y = TankFrame.GAME_HIGHT-Tank.h;
+			if(x<0) x=RectTank.h/20;
+			if(y<RectTank.w/2) y=RectTank.w/2;
+			if(x>TankFrame.GMAE_WIDTH-RectTank.w)  x = TankFrame.GMAE_WIDTH-RectTank.w;
+			if(y>TankFrame.GAME_HIGHT-RectTank.h) y = TankFrame.GAME_HIGHT-RectTank.h;
 		}
 		if(this.group==Group.BAD) {
 			if(x<0) dir=Dir.RIGHT;
-			if(y<Tank.w/2)  dir=Dir.DOWN;
-			if(x>TankFrame.GMAE_WIDTH-Tank.w) dir=Dir.LEFT;
-			if(y>TankFrame.GAME_HIGHT-Tank.h) dir=Dir.UP;
+			if(y<RectTank.w/2)  dir=Dir.DOWN;
+			if(x>TankFrame.GMAE_WIDTH-RectTank.w) dir=Dir.LEFT;
+			if(y>TankFrame.GAME_HIGHT-RectTank.h) dir=Dir.UP;
 		}
 	}
 
@@ -110,7 +115,7 @@ public class Tank extends BaseTank{
 			 this.dir = Dir.values()[rand];
 		 }
 	}
-
+	@Override
 	public void fire() {
 		fs.fire(this);
 		/*if(this.group==Group.GOOD) {
@@ -122,20 +127,9 @@ public class Tank extends BaseTank{
 		}*/
 	 }
 	
-
-	public boolean isMove() {
-		return move;
-	}
-
-	public void setMove(boolean move) {
-		this.move = move;
-	}
-
 	public void die() {
 		this.living=false;
 		
 	}
-
-	
 	 
 }

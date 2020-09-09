@@ -1,6 +1,8 @@
 package com.tank;
 
+import com.tank.abstractFactory.BaseTank;
+
 public interface FireStrategy {
 
-	void fire(Tank t);
+	void fire(BaseTank t);
 }
